@@ -120,12 +120,17 @@ class Match():
       given at the init of the Match object, and run the 'action'
       code given if one rule matches.
     """
+    result = None
     for pattern, action in self.rules:
       if self.match(to_match, pattern):
         try:
-          exec(action, self.env)
+          result = eval(action, self.env)
         except:
-          print('Unable to run the given action :', action)
-        return
+          try:
+            exec(action, self.env)
+          except:
+            print('Unable to run the given action :', action)
+        break
 
+    return result
     print('Pattern Matching is not exaustive')

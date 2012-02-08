@@ -3,13 +3,10 @@ from pmatch import *
 def main():
 
   m = Match(
-            [], 'print([])',
-            [42, []] , 'print(42)',
-            {}, 'print({})',
-            {'toto' : 42, 'tata' : '.*'}, 'print("dic toto")',
-            '_', 'print("year")')
+            [], 'return 1',
+            'e::t', 'return (e * self(t))')
 
-  m({'toto' : 42, 'tata' : 'aaaaaaa'})
+  m([1,2,3,4,5])
 
 if __name__ == '__main__':
   main()
