@@ -2,11 +2,15 @@ from pmatch import *
 
 def main():
 
+  l = str([x for x in range(1, 10)])
+  print(l)
   m = Match(
-            [], 'return 1',
-            'e::t', 'return (e * self(t))')
+            [], 'print(69)',
+            l, 'print("year")',
+            'e::t', 'print(42)',
+            '_', 'print(1337)')
 
-  m([1,2,3,4,5])
+  m(l)
 
 if __name__ == '__main__':
   main()
