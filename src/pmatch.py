@@ -14,7 +14,7 @@ class Match():
     """
     self.special = [re.compile('.*::.*'), re.compile('_.*_')]
     self.rules = []
-    self.env = {}
+    self.env = {'rec' : self, 'self' : self}
     if len(r) % 2:
       raise NameError('Invalid rules')
     for i in range(0, len(r), 2):
@@ -74,12 +74,12 @@ class Match():
           return False
     if isinstance(to_match, set):
       return True
-    return True
+    return res
 
 
   def match(self, to_match, pattern):
     """
-      Match recursively the to var to_match and pattern
+      Match recursively the two var to_match and pattern
     """
     # Check if the pattern is a var, a h::t pattern or a regexp
     if isinstance(pattern, str):
@@ -93,9 +93,7 @@ class Match():
           return False
       elif tmp == 1: # _var_ pattern
         return self.var_assign(to_match, pattern)
-      elif isinstance(to_match, str):
-        return re.match(pattern, to_match)
-      return False
+      return to_match == pattern
 
     # Check if to_match and pattern are iterable
     elif getattr(pattern, '__iter__', False) and getattr(to_match, '__iter__', False):
@@ -105,7 +103,7 @@ class Match():
           if len(pattern) != 0:
             return self.match_it(to_match, pattern)
           else:
-            return True
+            return False
         else:
           return False
       else:
@@ -120,17 +118,17 @@ class Match():
       given at the init of the Match object, and run the 'action'
       code given if one rule matches.
     """
-    result = None
+    self.result = None
     for pattern, action in self.rules:
       if self.match(to_match, pattern):
         try:
-          result = eval(action, self.env)
+          self.result = eval(action, self.env)
         except:
           try:
             exec(action, self.env)
           except:
             print('Unable to run the given action :', action)
-        break
+        return self.result
 
-    return result
     print('Pattern Matching is not exaustive')
+    return self.result

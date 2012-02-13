@@ -2,15 +2,14 @@ from pmatch import *
 
 def main():
 
-  l = str([x for x in range(1, 10)])
-  print(l)
+  l = [[x for x in range(1, 5)], [x for x in range(5, 10)]]
   m = Match(
-            [], 'print(69)',
-            l, 'print("year")',
-            'e::t', 'print(42)',
+            [[], '_e_'], 'print(_e_)',
+            ['_e_', []], 'print(_e_)',
+            ['e::h', 't::i'], 'rec([h,i])',
             '_', 'print(1337)')
 
-  m(l)
+  print(m(l))
 
 if __name__ == '__main__':
   main()
