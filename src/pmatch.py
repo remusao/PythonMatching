@@ -33,7 +33,7 @@ class Match():
   def __init__(self, *r):
     """
       Init a Match objet by giving an arbitrary number of
-      couple (pattern, action) to the constructor
+      couples (pattern, action) to the constructor
     """
     self.special = [re.compile('.*::.*'), re.compile('_.*_')]
     self.rules = []
@@ -49,6 +49,8 @@ class Match():
       Check if the pattern is a special one :
         - h::t
         - _var_
+      Return the index of the pattern if one matches,
+      return -1 otherwise.
     """
     for index, exp in enumerate(self.special):
       if exp.match(pattern):
@@ -72,6 +74,7 @@ class Match():
       l = list(l)
       
     self.env['tmp'] = l
+
     if len(l) < len(tmp_vars):
       for x in tmp_vars[len(l):]:
         self.env[x] = []
@@ -95,7 +98,7 @@ class Match():
 
   def match_it(self, to_match, pattern):
     """
-      Will parse recursively to_match and pattern and call self.match
+      Will parse recursively 'to_match' and 'pattern' and call self.match
       on their items.
     """
     res = True
@@ -115,7 +118,7 @@ class Match():
 
   def match(self, to_match, pattern):
     """
-      Match recursively the two var to_match and pattern
+      Match recursively the two arguments 'to_match' and 'pattern'
     """
     # Check if the pattern is a var, a h::t pattern or a regexp
     if isinstance(pattern, str):
@@ -151,7 +154,7 @@ class Match():
   def __call__(self, to_match):
     """
       Will try to match the argument 'to_match' with each rule
-      given at the init of the Match object, and run the 'action'
+      given at the __init__ of the Match object, and run the 'action'
       code given if one rule matches.
     """
     self.result = None
