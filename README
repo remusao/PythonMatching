@@ -1,0 +1,33 @@
+###                        ###
+##      PythonMatching      ##
+###                        ###
+
+
+~Synopsis :
+
+  """
+    Python Matching is a Free, experimental project that aims to
+    offer a Ocaml-like PatternMatching on Python structures like
+    lists, dic, set, int, string, etc... You can either use it to
+    compare two structures, or to implement some basic recursive
+    functions such as Fact, Fibo, etc... (eg in the test file).
+  """
+
+
+~HowTo :
+
+  - You can include this module in any Python Project.
+  - You MUST use *Python 3.x*
+  - PythonMatching allows you to create a "matcher", which
+  is an object initialized with as many patterns as you want,
+  and which is able to be called on any structure.
+
+  ex :
+
+    my_matcher = Match(
+                       pattern0, 'action0',
+                       pattern1, 'action1',
+                       ...)
+    print(my_matcher(my_struct))
+
+To see practical examples, just check out the file src/test.py !
