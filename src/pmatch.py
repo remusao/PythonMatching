@@ -39,13 +39,26 @@ class Match():
       and the rest in h
     """
     tmp_vars = pattern.split('::')
-    if isinstance(l, dict):
+    if not l:
+      for x in tmp_vars:
+        self.env[x] = []
+      return False
+    elif isinstance(l, dict):
       l = l.items()
-    if isinstance(l, set):
+    elif isinstance(l, set):
       l = list(l)
       
     self.env['tmp'] = l
-    exec(', '.join(tmp_vars[:-1]) + ', *' + tmp_vars[-1] + ' = tmp', self.env)
+    if len(l) < len(tmp_vars):
+      for x in tmp_vars[len(l):]:
+        self.env[x] = []
+      tmp_vars = tmp_vars[:len(l)]
+      if len(tmp_vars) == 1:
+        exec(str(tmp_vars[0]) + ' = tmp[0]', self.env)
+      else:
+        exec(', '.join(tmp_vars[:-1]) + ', *' + tmp_vars[-1] + ' = tmp', self.env)
+    else:
+      exec(', '.join(tmp_vars[:-1]) + ', *' + tmp_vars[-1] + ' = tmp', self.env)
     return True
 
 
@@ -66,13 +79,13 @@ class Match():
     if isinstance(to_match, list) or isinstance(to_match, tuple):
       for line, elt in enumerate(to_match):
         res = res and self.match(elt, pattern[line])
-    if isinstance(to_match, dict):
+    elif isinstance(to_match, dict):
       for x in to_match:
         if x in pattern:
           res = res and self.match(to_match[x], pattern[x])
         else:
           return False
-    if isinstance(to_match, set):
+    elif isinstance(to_match, set):
       return True
     return res
 
@@ -103,7 +116,7 @@ class Match():
           if len(pattern) != 0:
             return self.match_it(to_match, pattern)
           else:
-            return False
+            return True
         else:
           return False
       else:
