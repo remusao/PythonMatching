@@ -17,7 +17,7 @@
 ~HowTo :
 
   - You can include this module in any Python Project.
-  - You MUST use *Python 3.x*
+  - You MAY use *Python 3.x* or *Python 2.7x*
   - PythonMatching allows you to create a "matcher", which
   is an object initialized with as many patterns as you want,
   and which is able to be called on any structure.
@@ -31,3 +31,8 @@
     print(my_matcher(my_struct))
 
 To see practical examples, just check out the file src/test.py !
+
+
+~Performances :
+
+  - The 2.7x version is faster than the 3x one. (from x5 to x10 faster)

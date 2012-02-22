@@ -9,7 +9,7 @@ def main():
                 0, '1',
                 1, '1',
                 '_e_', '_e_ * rec(_e_ - 1)')
-  print(facto(5))
+  print(facto(30))
 
   #
   # Ex 2
@@ -30,7 +30,7 @@ def main():
   #
   # Ex 4
   #
-  l = [[x for x in range(1, 5)], [x for x in range(6, 10)]]
+  l = [[x for x in range(1, 100)], [x for x in range(1, 100)]]
   m = Match(
             [[], []], 'print("over")',
             [[], '_e_'], 'print(_e_)',
